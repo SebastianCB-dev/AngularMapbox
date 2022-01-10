@@ -19,7 +19,7 @@ export class MapViewComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    if(!this.placesService.userLocation) throw new Error('No hay placesService.userLocations');
+    if(!this.placesService.userLocation) throw new Error('We do not have your ubication');
 
     const map = new Map({
       container: this.mapDivElement.nativeElement, // container ID      
@@ -27,8 +27,9 @@ export class MapViewComponent implements AfterViewInit {
       zoom: 14 // starting zoom
       }).setStyle(`mapbox://styles/mapbox/light-v10`);                  
       const popup = new Popup().setHTML(`
-        <h6>Aquí estoy</h6>
-        <span>Estoy en este lugar del mundo</span>
+        <br>
+        <h6>You're here</h6>
+        <div style="text-align: center">😎</div>
       `);
       new Marker({
         color: 'red'

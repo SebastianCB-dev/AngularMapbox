@@ -8,6 +8,7 @@ import { AngularLogoComponent } from './components/angular-logo/angular-logo.com
 import { BtnChangeThemeComponent } from './components/btn-change-theme/btn-change-theme.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { NavigationInfoComponent } from './components/navigation-info/navigation-info.component';
 
 
 
@@ -18,7 +19,7 @@ import { SearchResultsComponent } from './components/search-results/search-resul
     LoadingComponent,
     BtnMyLocationComponent,
     AngularLogoComponent, 
-    BtnChangeThemeComponent, SearchBarComponent, SearchResultsComponent   
+    BtnChangeThemeComponent, SearchBarComponent, SearchResultsComponent, NavigationInfoComponent   
   ],
   imports: [
     CommonModule

@@ -3,7 +3,7 @@ import { AnySourceData, LngLatBounds, LngLatLike, Map, Marker, Popup } from 'map
 import mapboxgl from 'mapbox-gl';
 import { Feature } from '../interfaces/places';
 import { DirectionsApiClient } from '../api/directionsApiClient';
-import { DirectionsResponse, Route } from '../interfaces/directions';
+import { DirectionsResponse, Route, Step } from '../interfaces/directions';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,10 @@ export class MapServiceService {
 
   public map?: Map;
   private markers: Marker[] = [];
+  public isNavigating: boolean = false;;
+  public kilometersNavigations: number = 0;
+  public durationNavigations: number = 0;
+  public steps: Step[] = [];
 
   get isMapReady() {
     return !!this.map;
@@ -27,7 +31,7 @@ export class MapServiceService {
   }
 
   flyTo( coords: LngLatLike ) {
-    if(!this.isMapReady) throw new Error('El mapa no esta inicializado!!');
+    if(!this.isMapReady) throw new Error('The map is not initialized!!');
 
     this.map?.flyTo({
       zoom: 14,
@@ -38,7 +42,7 @@ export class MapServiceService {
 
   createMarkersFromPlaces( places: Feature[], userLocation: [number, number] ) {
 
-    if( !this.map ) throw new Error('Mapa no inicializado');
+    if( !this.map ) throw new Error('The map is not initialized!!');
     
     this.markers.forEach( marker => marker.remove() );
     const newMarkers = [];
@@ -47,8 +51,8 @@ export class MapServiceService {
       const [lng, lat] = place.center;
       const popup = new Popup()
       .setHTML(`
-      <h6>${ place.text_es }</h6>
-      <span>${ place.place_name_es }</span>
+      <h6>${ place.text }</h6>
+      <span>${ place.place_name }</span>
       `)
 
       const newMarker = new Marker()
@@ -83,9 +87,10 @@ export class MapServiceService {
 
   private drawPolyline( route: Route ) {
     // Todo Agregar Distancia y duracion
-    // console.log({distance: route.distance/ 1000, duration: route.duration / 60})
-
-    if(!this.map) throw new Error('Mapa no inicializado');
+    this.kilometersNavigations = route.distance / 1000;
+    this.durationNavigations = route.duration / 60;
+    this.steps = route.legs[0].steps;         
+    if(!this.map) throw new Error('The map is not initialized!!');
 
     const coords = route.geometry.coordinates;    
     const bounds = new LngLatBounds();

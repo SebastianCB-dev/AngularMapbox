@@ -18,7 +18,11 @@ export interface Route {
 
 export interface Geometry {
     coordinates: Array<number[]>;
-    type:        string;
+    type:        GeometryType;
+}
+
+export enum GeometryType {
+    LineString = "LineString",
 }
 
 export interface Leg {
@@ -42,10 +46,14 @@ export interface Step {
     name:          string;
     duration:      number;
     distance:      number;
-    driving_side:  string;
+    driving_side:  DrivingSide;
     weight:        number;
-    mode:          string;
+    mode:          Mode;
     geometry:      Geometry;
+}
+
+export enum DrivingSide {
+    Right = "right",
 }
 
 export interface Intersection {
@@ -75,12 +83,22 @@ export enum Class {
 }
 
 export interface Maneuver {
-    type:           string;
+    type:           ManeuverType;
     instruction:    string;
     bearing_after:  number;
     bearing_before: number;
     location:       number[];
     modifier?:      string;
+}
+
+export enum ManeuverType {
+    Arrive = "arrive",
+    Depart = "depart",
+    Turn = "turn",
+}
+
+export enum Mode {
+    Driving = "driving",
 }
 
 export interface Waypoint {
