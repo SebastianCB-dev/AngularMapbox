@@ -32,13 +32,17 @@ export class SearchResultsComponent {
     }
 
     getDirections( place: Feature ) {
-
+      //Eliminar los otros lugares: 
+      let places: Feature[] = [];
+      places.push(place);            
       if(!this.placesService.userLocation) throw new Error('No hay userLocation')
+      this.mapService.createMarkersFromPlaces(places,this.placesService.userLocation);
       const start = this.placesService.userLocation;
       const end = place.center as [number, number];
       this.mapService.getRouteBetweenPoints(start, end)
       this.placesService.deletePlaces();
       this.mapService.isNavigating = true;
+      this.selectedPlace = '';
     }
 
 }

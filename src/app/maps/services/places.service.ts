@@ -49,9 +49,12 @@ export class PlacesService {
   getPlacesByQuery( query: string = '' ) {
     // todo: evaluar cuando el query es nulo
 
-    if(query.length === 0) {
+    if(query.length === 0 && this.userLocation) {
       this.isLoadingPlaces = false;
       this.places = [];
+      this.mapService.deleteMarkers(this.userLocation);     
+      this.mapService.map?.removeLayer('RouteString'); 
+      this.mapService.map?.removeLayer('RouteString');
       return;
     }
     if( !this.userLocation ) throw new Error('No hay userlocation');

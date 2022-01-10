@@ -9,6 +9,7 @@
           </button>
         </div>
         <div class="toast-body">
+          <h4>Steps</h4>
           <ul class="list-group">
             <li *ngFor="let step of steps; let i = index"
                 class="list-group-item">{{ i + 1 }}. {{ step.maneuver.instruction }}</li>           

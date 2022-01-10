@@ -138,12 +138,18 @@ export class MapServiceService {
         "line-join": 'round'
       },
       paint: {
-        "line-color": 'black',
+        "line-color": '#CA0000',
         'line-width': 3
       }
     })
 
-
-
+   
   }
+
+  deleteMarkers(userLocation: [number, number]) {
+    this.markers.forEach( marker => marker.remove() );
+    this.map?.setCenter(userLocation);
+    this.map?.setZoom(14);
+  }
+
 }
