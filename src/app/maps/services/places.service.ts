@@ -52,9 +52,12 @@ export class PlacesService {
     if(query.length === 0 && this.userLocation) {
       this.isLoadingPlaces = false;
       this.places = [];
-      this.mapService.deleteMarkers(this.userLocation);     
-      this.mapService.map?.removeLayer('RouteString'); 
-      this.mapService.map?.removeLayer('RouteString');
+      this.mapService.deleteMarkers(this.userLocation);    
+      if(this.mapService.map?.getLayer('RouteString')) {
+        this.mapService.map?.removeLayer('RouteString'); 
+        this.mapService.map?.removeSource('RouteString');
+        this.mapService.isNavigating = false;
+      }                
       return;
     }
     if( !this.userLocation ) throw new Error('No hay userlocation');
@@ -67,8 +70,13 @@ export class PlacesService {
     }  )
       .subscribe( resp => {        
         this.isLoadingPlaces = false;
-        this.places = resp.features; 
-        this.mapService.createMarkersFromPlaces(this.places, this.userLocation!);       
+        this.places = resp.features;               
+        this.mapService.createMarkersFromPlaces(this.places, this.userLocation!);    
+        if(this.mapService.map?.getLayer('RouteString')) {
+          this.mapService.map?.removeLayer('RouteString'); 
+          this.mapService.map?.removeSource('RouteString');
+          this.mapService.isNavigating = false;
+        }    
       });
       
   }

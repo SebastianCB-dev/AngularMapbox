@@ -10,9 +10,9 @@
 <ul class="list-group mt-2"
     *ngIf="places.length > 0">
 
-    <li *ngFor="let place of places"
+    <li *ngFor="let place of places; let i = index"
         class="list-group-item list-group-item-action pointer"
-        (click)="flyTo(place)"
+        (click)="flyTo(place, i)"
         [class.active]="place.id === selectedPlace">
         <h6>{{ place.text }}</h6>
         <p>

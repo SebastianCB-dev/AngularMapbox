@@ -25,18 +25,20 @@ export class SearchResultsComponent {
       return this.placesService.places;
     }
 
-    flyTo( place: Feature ) {
+    flyTo( place: Feature, index:number ) {
+      //Change Color
+      this.mapService.markers[index].getElement().parentElement?.setAttribute('fill', '#ccc');
       this.selectedPlace = place.id;
       const [ lng, lat ] = place.center;
-      this.mapService.flyTo([lng, lat]);
+      this.mapService.flyTo( [lng, lat] );      
     }
 
     getDirections( place: Feature ) {
-      //Eliminar los otros lugares: 
+      //Eliminar los otros lugares:       
       let places: Feature[] = [];
       places.push(place);            
       if(!this.placesService.userLocation) throw new Error('No hay userLocation')
-      this.mapService.createMarkersFromPlaces(places,this.placesService.userLocation);
+      this.mapService.createMarkersFromPlaces(places, this.placesService.userLocation);
       const start = this.placesService.userLocation;
       const end = place.center as [number, number];
       this.mapService.getRouteBetweenPoints(start, end)

@@ -11,7 +11,7 @@ import { DirectionsResponse, Route, Step } from '../interfaces/directions';
 export class MapServiceService {
 
   public map?: Map;
-  private markers: Marker[] = [];
+  public markers: Marker[] = [];
   public isNavigating: boolean = false;;
   public kilometersNavigations: number = 0;
   public durationNavigations: number = 0;
@@ -125,8 +125,8 @@ export class MapServiceService {
     // Todo: limpiar ruta previa
 
     if(this.map.getLayer('RouteString')) {
-      this.map.removeLayer('RouteString');
-      this.map.removeSource('RouteString');
+      this.map?.removeLayer('RouteString');
+      this.map?.removeSource('RouteString');
     }
     this.map.addSource('RouteString', sourceData);
     this.map.addLayer({
