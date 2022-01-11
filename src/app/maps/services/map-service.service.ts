@@ -16,6 +16,7 @@ export class MapServiceService {
   public kilometersNavigations: number = 0;
   public durationNavigations: number = 0;
   public steps: Step[] = [];
+  public coords: number[][] = [];
 
   get isMapReady() {
     return !!this.map;
@@ -92,7 +93,8 @@ export class MapServiceService {
     this.steps = route.legs[0].steps;         
     if(!this.map) throw new Error('The map is not initialized!!');
 
-    const coords = route.geometry.coordinates;    
+    const coords = route.geometry.coordinates;  
+    this.coords = coords;  
     const bounds = new LngLatBounds();
 
     coords.forEach( ([lng , lat] ) => {
